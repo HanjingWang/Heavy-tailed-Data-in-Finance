@@ -16,13 +16,19 @@ def log_returns(x):
 def statistical_output(price_name):
     # price_name : Open Close High Low
     f= open('statistic_results.txt','w')
+    aapl_name = []
+    aapl_mean = []
+    aapl_median = []
+    aapl_log_return_mean = []
+    aapl_log_return_median = []
     for filename in os.listdir(os.getcwd()):
-        if filename != 'intraday_data_sample' and filename != 'statistic_results.txt' and filename != 'Statistics_Exploratory.py':
+        if filename != 'intraday_data_sample' and filename != 'statistic_results.txt':
             name = []
             mean = []
             median = []
             log_return_mean = []
             log_return_median = []
+
             for csv in os.listdir(filename):
                 
                 df = pd.read_csv(os.getcwd()+'\\'+filename+'\\'+csv)
@@ -34,11 +40,23 @@ def statistical_output(price_name):
                 
             dic={'name':name,'mean':mean,'median':median, 'log_return_mean':log_return_mean, 'log_return_median':log_return_median}
             df = pd.DataFrame(dic)
+            aapl_name.append(filename)
+            aapl_mean.append(mean[0])
+            aapl_median.append(median[0])
+            aapl_log_return_mean.append(log_return_mean[0])
+            aapl_log_return_median.append(log_return_median[0])
             f.write('===============================================\n')
             f.write('For '+filename)
             f.write('\n\n')
             f.write(str(df))
             f.write('\n\n')
+    dic1 = {'name':aapl_name,'mean':aapl_mean,'median':aapl_median, 'log_return_mean':aapl_log_return_mean, 'log_return_median':aapl_log_return_median}
+    df1 = pd.DataFrame(dic1)
+    f.write('===============================================\n')
+    f.write('For AAPL Data')
+    f.write('\n\n')
+    f.write(str(df1))
+    f.write('\n\n')
     f.close()
     
 def mean_median(data):
@@ -48,8 +66,6 @@ def mean_median(data):
     mean_list = [np.mean(data[sort_list[i]:sort_list[i+1]]) for i in range(20)]
     return np.median(mean_list)
     
-statistical_output('Open')    
-
 def bitcoin_output():
     df = pd.read_csv('C:\\Users\\hanji\\Desktop\\Heavy tailed data in Finance\\data\\intraday_data_sample\\Bitcoin.csv')
     np.mean(df['price_open'])
@@ -80,11 +96,46 @@ def bitcoin_output():
          , 'mean_median':mean_median_list,'log_return_mean_median':log_return_mean_median}
     df = pd.DataFrame(dic)
     df.to_csv('bitcoin_output.csv')
+    
 
 
 
+def intraday_data(df):
+    np.mean(df['Open'])
+    np.median(df['Open'])
+    np.mean(log_returns(df['Open']))
+    np.median(log_returns(df['Open']))
+    
+    unique_day = df['Date'].unique()
+    mean = []
+    median = []
+    log_return_mean = []
+    log_return_median = []
+    mean_median_list = []
+    log_return_mean_median = []    
+    groups = df.groupby('Date')
+    for day in unique_day:
+            mean.append(np.mean(groups.get_group(day)['Open']))
+            median.append(np.median(groups.get_group(day)['Open']))
+            log_return_mean.append(np.mean(log_returns(list(groups.get_group(day)['Open']))))
+            log_return_median.append(np.median(log_returns(list(groups.get_group(day)['Open']))))
+            mean_median_list.append(mean_median(groups.get_group(day)['Open']))
+            log_return_mean_median.append(mean_median(log_returns(list(groups.get_group(day)['Open']))))
+    dic={'day':unique_day,'mean':mean,'median':median, 'log_return_mean':log_return_mean, 'log_return_median':log_return_median
+         , 'mean_median':mean_median_list,'log_return_mean_median':log_return_mean_median}
+    df_new = pd.DataFrame(dic)
+    return df_new
+    
+if __name__ == '__main__':
+    
+    # statistical ananlysis for stock price per day, week and month
+    statistical_output('Open')
 
-
+    # compare the mean,median, and mean_median each day for intraday data
+    df = pd.read_csv('IBM_adjusted.txt',header = None)
+    df.columns = ['Date','Time','Open','High','Low','Close','Volume']
+    df_new = intraday_data(df)
+    df_new.to_csv('IBM_adjusted_mean_median_perday.csv',index=False)
 
 
 
