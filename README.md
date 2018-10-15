@@ -8,4 +8,5 @@ Discovery for the Heavy_tailed Data in Finance
 2. Updated the statistical output for the new data
 3. Vitualized the 20-year daily, weekly, monthly data using histograms and time series
 4. Collected the big intraday data per minute and per second (didn't upload to Github because they are too big) Upload the data readme.txt
-5. Compare the daily mean, median, log_return_mean, log_return_median, mean_median, log_return_mean_median 
+5. Compare the daily mean, median, log_return_mean, log_return_median, mean_median, log_return_mean_median for IBM_adjusted which shows
+IBM (International Business Machines) Regular session data per minute from Jan 1998
