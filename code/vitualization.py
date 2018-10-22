@@ -13,6 +13,8 @@ plotly.tools.set_credentials_file(username='hanjingwang', api_key='3bYf12UCH4thF
 import os
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
+
 
 def histogram(filename):
     df_list = []
@@ -96,9 +98,31 @@ def scatterplot(filename):
     title = filename)
     py.iplot(fig, layout = layout, filename=filename)
 
+def intraday_histogram_boxplot(path_list):
+    
+    dataframe_list = []
+    name_list = []
+    
+    for path in path_list:
+        # 'C:\\Users\\hanji\\Desktop\\Heavy tailed data in Finance\\data\\Big_intraday_data\\per_second'
+        for data in os.listdir(path):
+            dataframe_list.append(pd.read_csv(path+'\\'+data,encoding='utf8'))
+            name_list.append(data)
+        for i in range(len(dataframe_list)):
+            fig, axs = plt.subplots(1,2)
+            axs[0].hist(dataframe_list[i].ix[:,2],bins=20)
+            axs[0].set_title(name_list[i])
+            axs[1].boxplot(dataframe_list[i].ix[:,2])
+            axs[1].set_title(name_list[i])
+            plt.show()
+            plt.savefig('C:\\Users\\hanji\\Desktop\\Heavy tailed data in Finance\\output\\vitualization\\histogram\\'+name_list[i]+'.png')
+            plt.close()
+    
+
 if __name__ == '__main__':    
     histogram('20_year_daily')
-
+    
+    intraday_histogram_boxplot(['C:\\Users\\hanji\\Desktop\\Heavy tailed data in Finance\\data\\Big_intraday_data\\per_second','C:\\Users\\hanji\\Desktop\\Heavy tailed data in Finance\\data\\Big_intraday_data\\per_minute'])
 
 
 

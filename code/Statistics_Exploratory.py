@@ -59,14 +59,14 @@ def statistical_output(price_name):
     f.write('\n\n')
     f.close()
     
-def mean_median(data):
-    number_list = list(random.sample(range(1, len(data)-1), 19))
+def mean_median(data,n):
+    number_list = list(random.sample(range(1, len(data)-1), n-1))
     sort_list = number_list+[0,len(data)-1]
     sort_list.sort()
-    mean_list = [np.mean(data[sort_list[i]:sort_list[i+1]]) for i in range(20)]
+    mean_list = [np.mean(data[sort_list[i]:sort_list[i+1]]) for i in range(n)]
     return np.median(mean_list)
     
-def bitcoin_output():
+def bitcoin_output(n):
     df = pd.read_csv('C:\\Users\\hanji\\Desktop\\Heavy tailed data in Finance\\data\\intraday_data_sample\\Bitcoin.csv')
     np.mean(df['price_open'])
     np.median(df['price_open'])
@@ -90,8 +90,8 @@ def bitcoin_output():
         median.append(np.median(groups.get_group(day)['price_open']))
         log_return_mean.append(np.mean(log_returns(list(groups.get_group(day)['price_open']))))
         log_return_median.append(np.median(log_returns(list(groups.get_group(day)['price_open']))))
-        mean_median_list.append(mean_median(groups.get_group(day)['price_open']))
-        log_return_mean_median.append(mean_median(log_returns(list(groups.get_group(day)['price_open']))))
+        mean_median_list.append(mean_median(groups.get_group(day)['price_open'],n))
+        log_return_mean_median.append(mean_median(log_returns(list(groups.get_group(day)['price_open'])),n))
     dic={'day':unique_day,'mean':mean,'median':median, 'log_return_mean':log_return_mean, 'log_return_median':log_return_median
          , 'mean_median':mean_median_list,'log_return_mean_median':log_return_mean_median}
     df = pd.DataFrame(dic)
@@ -100,12 +100,7 @@ def bitcoin_output():
 
 
 
-def intraday_data(df):
-    np.mean(df['Open'])
-    np.median(df['Open'])
-    np.mean(log_returns(df['Open']))
-    np.median(log_returns(df['Open']))
-    
+def intraday_data(df,column,n):  
     unique_day = df['Date'].unique()
     mean = []
     median = []
@@ -114,28 +109,93 @@ def intraday_data(df):
     mean_median_list = []
     log_return_mean_median = []    
     groups = df.groupby('Date')
+    day1=[]
     for day in unique_day:
-            mean.append(np.mean(groups.get_group(day)['Open']))
-            median.append(np.median(groups.get_group(day)['Open']))
-            log_return_mean.append(np.mean(log_returns(list(groups.get_group(day)['Open']))))
-            log_return_median.append(np.median(log_returns(list(groups.get_group(day)['Open']))))
-            mean_median_list.append(mean_median(groups.get_group(day)['Open']))
-            log_return_mean_median.append(mean_median(log_returns(list(groups.get_group(day)['Open']))))
-    dic={'day':unique_day,'mean':mean,'median':median, 'log_return_mean':log_return_mean, 'log_return_median':log_return_median
+            temp = groups.get_group(day)[column]
+            if len(temp)>n+1:
+                print(day)
+                day1.append(day)
+                mean.append(np.mean(temp))
+                median.append(np.median(temp))
+                log_return_mean.append(np.mean(log_returns(list(temp))))
+                log_return_median.append(np.median(log_returns(list(temp))))
+                mean_median_list.append(mean_median(temp,n))
+                log_return_mean_median.append(mean_median(log_returns(list(temp)),n))
+    dic={'day':day1,'mean':mean,'median':median, 'log_return_mean':log_return_mean, 'log_return_median':log_return_median
          , 'mean_median':mean_median_list,'log_return_mean_median':log_return_mean_median}
     df_new = pd.DataFrame(dic)
     return df_new
+
+
+def intraday_period(df,column,n,period):
+    day = df['Date'].unique()
+    temp = {}
     
+    length = len(day)
+    number = length//period
+    
+    part = list(np.repeat(np.array(range(1,number+1)),period))+[number+1 for i in range(length%period)]
+    for i in range(len(day)):
+        temp[list(day)[i]]=part[i]
+    temp2 = [str(temp[i]) for i in df['Date']]
+    df['Period_count']=temp2
+    
+    groups = df.groupby('Period_count')
+    
+    unique_period = df['Period_count'].unique()
+    mean = []
+    median = []
+    log_return_mean = []
+    log_return_median = []
+    mean_median_list = []
+    log_return_mean_median = []    
+    period_name=[]
+
+    
+    for day in unique_period:
+        temp = groups.get_group(day)[column]
+        temp2 = list(groups.get_group(day)['Date'])
+        if len(temp)>n+1:
+            print(day)
+            period_name.append(temp2[0]+'-'+temp2[-1])
+            mean.append(np.mean(temp))
+            median.append(np.median(temp))
+            log_return_mean.append(np.mean(log_returns(list(temp))))
+            log_return_median.append(np.median(log_returns(list(temp))))
+            mean_median_list.append(mean_median(temp,n))
+            log_return_mean_median.append(mean_median(log_returns(list(temp)),n))
+    dic={'period':period_name,'mean':mean,'median':median, 'log_return_mean':log_return_mean, 'log_return_median':log_return_median
+             , 'mean_median':mean_median_list,'log_return_mean_median':log_return_mean_median}
+    df_new = pd.DataFrame(dic)
+    return df_new        
+        
 if __name__ == '__main__':
     
     # statistical ananlysis for stock price per day, week and month
     statistical_output('Open')
 
     # compare the mean,median, and mean_median each day for intraday data
-    df = pd.read_csv('IBM_adjusted.txt',header = None)
+    df = pd.read_csv('OIH_adjusted.txt',header = None)
     df.columns = ['Date','Time','Open','High','Low','Close','Volume']
-    df_new = intraday_data(df)
-    df_new.to_csv('IBM_adjusted_mean_median_perday.csv',index=False)
+    df_new = intraday_data(df,'Open',20)
+    df_new.to_csv('OIH_adjusted_mean_median_perday.csv',index=False)
+    
+    # Three day periods
+    path_list = ['C:\\Users\\hanji\\Desktop\\Heavy tailed data in Finance\\data\\Big_intraday_data\\per_second','C:\\Users\\hanji\\Desktop\\Heavy tailed data in Finance\\data\\Big_intraday_data\\per_minute']
+    dataframe_list = []
+    name_list = []
+    period=5
+    for path in path_list:
+        # 'C:\\Users\\hanji\\Desktop\\Heavy tailed data in Finance\\data\\Big_intraday_data\\per_second'
+        for data in os.listdir(path):
+            dataframe_list.append(pd.read_csv(path+'\\'+data,encoding='utf8'))
+            name_list.append(data)
+    for i in range(len(name_list)):
+        df = dataframe_list[i].ix[:,[0,2]]
+        df.columns = ['Date','Open']
+        df_new=intraday_period(df,'Open',20,period)
+        df_new.to_csv(name_list[i]+'.csv', index=False)
+        
 
 
 
