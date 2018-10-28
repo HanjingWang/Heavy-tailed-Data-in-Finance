@@ -14,7 +14,21 @@ IBM (International Business Machines) Regular session data per minute from Jan 1
 
 10/16-10/22:
 
-1. Virlualized all of the big intraday data samples and generated histograms and boxplots using matplotlib.
+1. Virtualized all of the big intraday data samples and generated histograms and boxplots using matplotlib.
 2. Update Statistical_Exploratory.py and Vitualization.py
 3. Compared the daily mean, median, log_return_mean, log_return_median, mean_median, log_return_mean_median for all the intraday data I have.
 4. Compared the daily mean, median, log_return_mean, log_return_median, mean_median, log_return_mean_median in different periods like every three days and every five days for all the intraday data I have.
+
+
+10/23-10/29:
+
+1. Update all the codes
+2. Virtualized the log returns for all the data I collected and plot histograms for each dataset
+3. Research the Weiszfeld algorithm for computing the geometric median and implement the Weiszfeld algorithm in python
+4. Applied this estimator to get a simultaneous 5-dimensional estimate of the log returns for the 5 stocks you are tracking. Compared this with the mean estimators. 
+
+
+
+
+
+
