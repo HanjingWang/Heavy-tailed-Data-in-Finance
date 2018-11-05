@@ -27,7 +27,12 @@ IBM (International Business Machines) Regular session data per minute from Jan 1
 3. Research the Weiszfeld algorithm for computing the geometric median and implement the Weiszfeld algorithm in python
 4. Applied this estimator to get a simultaneous 5-dimensional estimate of the log returns for the 5 stocks you are tracking. Compared this with the mean estimators. 
 
+10/30-11/5:
 
+1. Updated the virtualizations for the histograms of log returns. Added mean lines and median lines.
+2. Code the Subgradient for the cost function in Weiszfeld algorithm. Use backtracking to compute the geometric median.
+3. Virtualized the geometric median generated from the weiszfeld algorithm and the subgradient. Also, made comparision for mean estimator and geometric median estimator
+4. Compare the mean-of-medians estimator in different scales and made virtualizations.
 
 
 
