@@ -35,5 +35,8 @@ IBM (International Business Machines) Regular session data per minute from Jan 1
 4. Compare the mean-of-medians estimator in different scales and made virtualizations.
 
 
-
+11/6 - 11/12:
+1. Modified the codes for computing the geometric median, including applying the weiszfeld algorithm as well as the subgradient decent.
+2. Uploaded the geometric median for 5 stocks for each year.
+3. Modified the virtualizations according to the geometric median and median-of-means
 
