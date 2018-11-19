@@ -6,7 +6,7 @@ Discovery for the Heavy_tailed Data in Finance
 
 1. Collected the 20-year daily, weekly, monthly prices for 5 stocks
 2. Updated the statistical output for the new data
-3. Virtualized the 20-year daily, weekly, monthly data using histograms and time series using Plotly
+3. Visualized the 20-year daily, weekly, monthly data using histograms and time series using Plotly
 4. Collected the big intraday data per minute and per second (didn't upload the data to Github because they are too big) Upload the data readme.txt in /data/intraday_data/
 5. Compare the daily mean, median, log_return_mean, log_return_median, mean_median, log_return_mean_median for IBM_adjusted which shows
 IBM (International Business Machines) Regular session data per minute from Jan 1998
@@ -14,7 +14,7 @@ IBM (International Business Machines) Regular session data per minute from Jan 1
 
 10/16-10/22:
 
-1. Virtualized all of the big intraday data samples and generated histograms and boxplots using matplotlib.
+1. Visualized all of the big intraday data samples and generated histograms and boxplots using matplotlib.
 2. Update Statistical_Exploratory.py and Vitualization.py
 3. Compared the daily mean, median, log_return_mean, log_return_median, mean_median, log_return_mean_median for all the intraday data I have.
 4. Compared the daily mean, median, log_return_mean, log_return_median, mean_median, log_return_mean_median in different periods like every three days and every five days for all the intraday data I have.
@@ -23,20 +23,24 @@ IBM (International Business Machines) Regular session data per minute from Jan 1
 10/23-10/29:
 
 1. Update all the codes
-2. Virtualized the log returns for all the data I collected and plot histograms for each dataset
+2. Visualized the log returns for all the data I collected and plot histograms for each dataset
 3. Research the Weiszfeld algorithm for computing the geometric median and implement the Weiszfeld algorithm in python
 4. Applied this estimator to get a simultaneous 5-dimensional estimate of the log returns for the 5 stocks you are tracking. Compared this with the mean estimators. 
 
 10/30-11/5:
 
-1. Updated the virtualizations for the histograms of log returns. Added mean lines and median lines.
+1. Updated the visualizations for the histograms of log returns. Added mean lines and median lines.
 2. Code the Subgradient for the cost function in Weiszfeld algorithm. Use backtracking to compute the geometric median.
-3. Virtualized the geometric median generated from the weiszfeld algorithm and the subgradient. Also, made comparision for mean estimator and geometric median estimator
+3. Visualized the geometric median generated from the weiszfeld algorithm and the subgradient. Also, made comparision for mean estimator and geometric median estimator
 4. Compare the mean-of-medians estimator in different scales and made virtualizations.
 
 
 11/6 - 11/12:
 1. Modified the codes for computing the geometric median, including applying the weiszfeld algorithm as well as the subgradient decent.
 2. Uploaded the geometric median for 5 stocks for each year.
-3. Modified the virtualizations according to the geometric median and median-of-means
+3. Modified the visualizations according to the geometric median and median-of-means
 
+11/13 - 11/19:
+1. Coutinued to update the code and visualizations.
+2. Made data samples of size 2^19, 2^21, 2^22, 2^25 from my big intraday data. Plot the median error against log_N^k for the median-of-means estimators. N is the sample size and k shows that we seperate the data into how many parts when we compute the median-of-means.
+3. I am exploring the difference between almost equally seperate the data and randomly seperate the data when we compute the median-of-means.
