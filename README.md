@@ -44,3 +44,11 @@ IBM (International Business Machines) Regular session data per minute from Jan 1
 1. Coutinued to update the code and visualizations.
 2. Made data samples of size 2^19, 2^21, 2^22, 2^25 from my big intraday data. Plot the median error against log_N^k for the median-of-means estimators. N is the sample size and k shows that we seperate the data into how many parts when we compute the median-of-means.
 3. I am exploring the difference between almost equally seperate the data and randomly seperate the data when we compute the median-of-means.
+
+11/21 - 11/26:
+1. Work on the convergence of the geometric median. Created a file named the geometric_median_convergence.txt including the trace of the points for each year when computing the geomatrix median. 
+
+The results are that for Weiszfeld algorithm, they did converge for each year. But for subgradient decent, we need a suitable learning rate to make it converge for log returns of each day.
+
+2. Plot the geometric median for the 5 stocks for each month compared to mean and median. There are 240 months in total. 
+3. For the plot median error against log_N^k I made this week, I splited data randomly when I compute the median-of-means and replicate 10 times for each scale. For that plot lask week, I splited data equally.
