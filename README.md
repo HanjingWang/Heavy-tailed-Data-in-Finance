@@ -52,3 +52,11 @@ The results are that for Weiszfeld algorithm, they did converge for each year. B
 
 2. Plot the geometric median for the 5 stocks for each month compared to mean and median. There are 240 months in total. 
 3. For the plot median error against log_N^k I made this week, I splited data randomly when I compute the median-of-means and replicate 10 times for each scale. For that plot lask week, I splited data equally.
+
+11/27-12/3:
+
+1. Checked the error for computing the geometric median. The geometric median of the rotated data is not the same as that of the original data
+2. Debuged the code and recompute the geometric median for the 5 stocks. Visualized them yearly and monthly.
+3. Modified the plot of computing the median error for different sample size and different number of partitions. Make permutations for each step.
+
+
