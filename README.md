@@ -59,4 +59,7 @@ The results are that for Weiszfeld algorithm, they did converge for each year. B
 2. Debuged the code and recompute the geometric median for the 5 stocks. Visualized them yearly and monthly.
 3. Modified the plot of computing the median error for different sample size and different number of partitions. Make permutations for each step.
 
+12/4 - 12/11:
 
+1. Updated the visualizations for geometric medians of 5 stocks monthly.
+2. Updated the visualizations for computing the mean error for different sample size and different number of partitions. Change median error to mean error. Change y-axis to persentitle of the movement from the global mean.
