@@ -63,3 +63,8 @@ The results are that for Weiszfeld algorithm, they did converge for each year. B
 
 1. Updated the visualizations for geometric medians of 5 stocks monthly.
 2. Updated the visualizations for computing the mean error for different sample size and different number of partitions. Change median error to mean error. Change y-axis to persentitle of the movement from the global mean.
+
+12/11-12/18:
+1. Unloaded the differnece plot comparing the geometric median, median, means
+2. For the five stocks yearly plot, add the median-of-means estimators. We use 10 partitions and 100 permutaitons for each step.
+3. The plot for 12/18 are in vistualizations/Compare_methods/1218/
